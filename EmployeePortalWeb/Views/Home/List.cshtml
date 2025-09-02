@@ -1,0 +1,30 @@
+﻿@model List<EmployeeModelPackage.RegisterModel>
+
+<h2>Registered Employees</h2>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["SuccessMessage"]
+    </div>
+}
+
+<table>
+    <thead>
+        <tr>
+            <th>User Name</th>
+            <th>Email</th>
+            <th>Phone Number</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var emp in Model)
+        {
+            <tr>
+                <td>@emp.UserName</td>
+                <td>@emp.Email</td>
+                <td>@emp.PhoneNumber</td>
+            </tr>
+        }
+    </tbody>
+</table>

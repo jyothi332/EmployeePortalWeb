@@ -1,0 +1,163 @@
+﻿          
+@model EmployeeModelPackage.EmployeeModel
+
+<!-- ✅ Embedded CSS -->
+<style>
+    .text-danger {
+        color: red;
+        font-weight: 600;
+        font-size: 0.9rem;
+    }
+
+    .form-box {
+        background: #ffffff;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        margin-top: 30px;
+    }
+
+    .form-title {
+        margin-bottom: 25px;
+        font-size: 20px;
+        font-weight: 600;
+        color: #3c8dbc;
+        border-bottom: 2px solid #3c8dbc;
+        padding-bottom: 10px;
+    }
+
+    .form-row {
+        display: flex;
+        gap: 20px;
+        flex-wrap: wrap;
+        margin-bottom: 25px;
+    }
+
+    .form-group-half {
+        flex: 1;
+        min-width: 45%;
+    }
+
+    .btn-center {
+        display: flex;
+        justify-content: center;
+    }
+
+    .btn-save {
+        background-color: #00a65a;
+        color: white;
+        padding: 10px 30px;
+        font-size: 16px;
+        border: none;
+        border-radius: 4px;
+        transition: background-color 0.3s ease;
+    }
+
+        .btn-save:hover {
+            background-color: #008d4c;
+        }
+
+    .alert {
+        margin-bottom: 20px;
+    }
+</style>
+
+<!-- ✅ Main Form -->
+<section class="content">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                <div class="form-box">
+                    <div class="form-title">Add Employee</div>
+
+                    <!-- ✅ Form -->
+                    <form method="post" asp-action="Add">
+                        <div class="form-row">
+                            <div class="form-group form-group-half">
+                                <label asp-for="Name" class="control-label">Name</label>
+                                <input asp-for="Name" class="form-control" placeholder="Enter Name" />
+                                <span asp-validation-for="Name" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group form-group-half">
+                                <label asp-for="Email" class="control-label">Email</label>
+                                <input asp-for="Email" class="form-control" placeholder="Enter Email" />
+                                <span asp-validation-for="Email" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group form-group-half">
+                                <label asp-for="Salary" class="control-label">Salary</label>
+                                <input asp-for="Salary" class="form-control" placeholder="Enter Salary" />
+                                <span asp-validation-for="Salary" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group form-group-half">
+                                <label asp-for="Position" class="control-label">Position</label>
+                                <input asp-for="Position" class="form-control" placeholder="Enter Position" />
+                                <span asp-validation-for="Position" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="btn-left">
+                            <button type="submit" class="btn-save" id="savebtn">Save</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ✅ Scripts Section -->
+
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+    $(document).ready(function() {
+      $('#savebtn').click(function(e) {
+          debugger;
+        e.preventDefault();  // Prevent normal form submission
+
+        var form = $(this).closest('form');
+        var formData = form.serialize();
+
+        $.ajax({
+          url: form.attr('action'),  // The URL to post to (should be your Edit action URL)
+          type: 'POST',
+          data: formData,
+          success: function(response) {
+            // Assuming your action redirects, you'll want to modify the controller to return JSON
+            // For now, let's just show a success alert
+            Swal.fire({
+              icon: 'success',
+              title: 'Success!',
+              text: response.message || 'Employee saved successfully!',
+              timer: 2000,
+              showConfirmButton: false
+            });
+          },
+          error: function(xhr) {
+            var errorMessage = "Something went wrong!";
+            if(xhr.responseJSON && xhr.responseJSON.error) {
+              errorMessage = xhr.responseJSON.error;
+            }
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: errorMessage
+            });
+          }
+        });
+      });
+    });
+</script>
+
+
+
+
+

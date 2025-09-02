@@ -1,0 +1,22 @@
+﻿@model EmployeeModelPackage.RegisterModel
+[assembly: Microsoft.AspNetCore.Identity.UI.UIFrameworkAttribute("Bootstrap5")]
+
+<h2>Enter OTP</h2>
+
+<form method="post">
+    <div>
+        <label asp-for="OTPCode"></label>
+        <input asp-for="OTPCode" class="form-control" />
+        <span asp-validation-for="OTPCode" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Verify OTP</button>
+</form>
+
+@* @if (Model.Message != null)
+{
+    <p class="text-info">@Model.Message</p>
+} *@
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

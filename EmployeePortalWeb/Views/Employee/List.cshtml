@@ -1,0 +1,124 @@
+﻿
+    
+
+
+
+@model List<EmployeeModelPackage.EmployeeModel>
+
+
+<style>
+    /* Table header styling */
+    thead th {
+        background-color: #007bff; /* Bootstrap primary blue */
+        color: white;
+        text-align: center;
+    }
+
+    /* Table body cells */
+    tbody td {
+        background-color: #e9ecef; /* light gray background */
+        color: #343a40; /* dark gray text */
+        vertical-align: middle;
+        text-align: center;
+    }
+
+    /* Add button (custom green) */
+    .btn-add {
+        background-color: #90ee90; /* light green */
+        color: black;
+        border: none;
+    }
+
+    /* Edit button (custom yellow) */
+    .btn-edit {
+        background-color: #ffff99; /* light yellow */
+        color: black;
+        border: none;
+    }
+
+    /* Delete button (default Bootstrap red) */
+    .btn-danger {
+        background-color: #dc3545;
+        border-color: #dc3545;
+        color: white;
+    }
+
+    /* Links above table */
+    a {
+        color: #007bff;
+        text-decoration: none;
+        margin-right: 15px;
+    }
+
+    a:hover {
+        text-decoration: underline;
+    }
+</style>
+
+<h1 style="color: #007bff;" >Employees</h1>
+
+<a href="@Url.Action("DownloadPdf", "Employee")" target="_blank" class="btn btn-outline-primary btn-sm me-2">Download PDF</a>
+<a href="@Url.Action("Add", "Employee")" target="_blank" class="btn btn-outline-success btn-sm">+ Add</a>
+
+<table class="table table-bordered mt-3">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Salary</th>
+            <th>Email</th>
+            <th>Position</th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var employee in Model)
+        {
+            <tr>
+                <td>@employee.Id</td>
+                <td>@employee.Name</td>
+                <td>@employee.Salary.ToString("C")</td>
+                <td>@employee.Email</td>
+                <td>@employee.Position</td>
+                <td>
+                    <a class="btn btn-edit btn-sm"
+                       asp-controller="Employee"
+                       asp-action="Edit"
+                       asp-route-id="@employee.Id">Edit</a>
+                </td>
+                <td>
+                    <form asp-action="Delete"
+                          asp-controller="Employee"
+                          method="post"
+                          style="display:inline;">
+                        <input type="hidden" name="id" value="@employee.Id" />
+                        <button type="submit"
+                                class="btn btn-danger btn-sm" id="deletebtn"
+                                onclick="return confirm('Are you sure you want to delete this employee?');">
+                            Delete
+                        </button>
+                    </form>
+                </td>
+            </tr>
+        }
+        
+    </tbody>
+</table>
+
+<a href="@Url.Action("Register", "Login")">Register</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
